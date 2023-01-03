@@ -22,7 +22,7 @@ jobs:
     # Nodejs 런타임 정보 설정
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
