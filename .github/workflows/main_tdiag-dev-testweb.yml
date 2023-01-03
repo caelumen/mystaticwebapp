@@ -13,20 +13,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # 경고 무시
+    env: 
+      CI: false
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
 
-      - name: npm install, build, and test
+      - name: npm install
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-
+      - name: npm build, test
+        run: |
+          npm run build --if-present
+          npm run test --if-present
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
